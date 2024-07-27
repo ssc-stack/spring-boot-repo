@@ -1,17 +1,17 @@
 package com.shashank.learning_spring.game;
 
 public class GameRunner {
-    private Mario mario;
+    private GamingConsole gamingConsole;
 
-    public GameRunner(Mario mario) {
-        this.mario=mario;
+    public GameRunner(GamingConsole gamingConsole) {
+        this.gamingConsole=gamingConsole;
     }
 
     public void run() {
-        System.out.println("Game:"+mario);
-        mario.up();
-        mario.down();
-        mario.left();
-        mario.right();
+        System.out.println("Game:"+gamingConsole);
+        gamingConsole.up();
+        gamingConsole.down();
+        gamingConsole.left();
+        gamingConsole.right();
     }
 }
