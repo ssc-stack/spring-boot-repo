@@ -1,5 +1,6 @@
 package com.shashank.learning_spring.game;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class GameRunner {
     private GamingConsole gamingConsole;
 
-    public GameRunner(GamingConsole gamingConsole) {
+    public GameRunner(@Qualifier("SuperContraQualifier") GamingConsole gamingConsole) {
         this.gamingConsole=gamingConsole;
     }
 
