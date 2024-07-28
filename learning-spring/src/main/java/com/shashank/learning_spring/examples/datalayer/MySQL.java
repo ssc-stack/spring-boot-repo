@@ -1,8 +1,9 @@
 package com.shashank.learning_spring.examples.datalayer;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component
+@Repository
 public class MySQL implements DataService {
     @Override
     public int[] getNumbers() {

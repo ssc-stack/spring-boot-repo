@@ -2,8 +2,9 @@ package com.shashank.learning_spring.examples.datalayer;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component
+@Repository
 @Primary
 public class MongoDB implements DataService {
     @Override

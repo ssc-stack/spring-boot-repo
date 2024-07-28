@@ -1,11 +1,12 @@
 package com.shashank.learning_spring.examples.datalayer;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 
-@Component
 
+@Service
 public class BusinessService {
     private DataService dataService;
 
