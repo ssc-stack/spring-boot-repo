@@ -26,9 +26,13 @@ public class LearningSpringApplication {
 		System.out.println(annotationConfigApplicationContext.getBean("student"));
 		System.out.println(annotationConfigApplicationContext.getBean("name"));
 
-		Arrays.stream(annotationConfigApplicationContext.getBeanDefinitionNames()).
-				forEach(System.out::println);
-		System.out.println(annotationConfigApplicationContext.getBeanDefinitionCount());
+		System.out.println(annotationConfigApplicationContext.getBean("student2"));
+
+		System.out.println(annotationConfigApplicationContext.getBean(Student.class));
+		System.out.println(annotationConfigApplicationContext.getBean("student3"));
+		//Arrays.stream(annotationConfigApplicationContext.getBeanDefinitionNames()).
+				//forEach(System.out::println);
+		//System.out.println(annotationConfigApplicationContext.getBeanDefinitionCount());
 
 	}
 
