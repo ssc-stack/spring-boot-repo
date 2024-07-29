@@ -17,6 +17,7 @@ public class UserController {
         userList.add(new User(1,"Shashank",25));
         userList.add(new User(2,"Elon",40));
         userList.add(new User(3,"Amber",39));
+        userList.add(new User(3,"Johnny",52));
 
         return userList;
     }
