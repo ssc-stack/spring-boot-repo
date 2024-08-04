@@ -1,5 +1,6 @@
 package com.shashank.social_media_app.controller;
 
+import com.shashank.social_media_app.entity.Post;
 import com.shashank.social_media_app.entity.User;
 import com.shashank.social_media_app.exception.UserNotFoundException;
 import com.shashank.social_media_app.service.UserDaoService;
@@ -48,5 +49,13 @@ public class UserController {
     @DeleteMapping(path="delete/id/{id}")
     public void deleteUser(@PathVariable  int id) {
         userDaoService.deleteUser(id);
+    }
+
+    @GetMapping("/id/{id}/posts")
+    public List<Post> getPostsByUserId(@PathVariable int id) {
+        Optional<User> optionalUser=userDaoService.findOne(id);
+        if(optionalUser.isEmpty()) throw new UserNotFoundException("User Not Found with ID:"+id);
+
+        return optionalUser.get().getPosts();
     }
 }
