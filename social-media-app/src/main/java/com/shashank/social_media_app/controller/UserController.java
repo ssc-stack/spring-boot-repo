@@ -3,6 +3,7 @@ package com.shashank.social_media_app.controller;
 import com.shashank.social_media_app.entity.User;
 import com.shashank.social_media_app.exception.UserNotFoundException;
 import com.shashank.social_media_app.service.UserDaoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +37,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> addUser(@RequestBody User user) {
+    public ResponseEntity<User> addUser(@Valid @RequestBody User user) {
         User savedUser=userDaoService.save(user);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().cloneBuilder().
                 path("/{id}").buildAndExpand(savedUser.getId()).toUri();
