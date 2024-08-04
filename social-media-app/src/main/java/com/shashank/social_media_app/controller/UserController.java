@@ -1,13 +1,14 @@
 package com.shashank.social_media_app.controller;
 
 import com.shashank.social_media_app.entity.User;
+import com.shashank.social_media_app.exception.UserNotFoundException;
 import com.shashank.social_media_app.service.UserDaoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -28,6 +29,17 @@ public class UserController {
 
     @GetMapping(path="/id/{id}")
     public User getUserById(@PathVariable int id) {
-        return userDaoService.findOne(id);
+        User user=userDaoService.findOne(id);
+        if(user==null) throw new UserNotFoundException("User Not Found with ID:"+id);
+
+        return user;
+    }
+
+    @PostMapping
+    public ResponseEntity<User> addUser(@RequestBody User user) {
+        User savedUser=userDaoService.save(user);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().cloneBuilder().
+                path("/{id}").buildAndExpand(savedUser.getId()).toUri();
+        return ResponseEntity.created(location).build();
     }
 }
