@@ -1,10 +1,19 @@
 package com.shashank.social_media_app.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.Data;
 
-//@Entity
+@Data
+@Entity
 public class Post {
     @Id
+    @GeneratedValue
     private int id;
+
+    private String description;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private User user;
 }
