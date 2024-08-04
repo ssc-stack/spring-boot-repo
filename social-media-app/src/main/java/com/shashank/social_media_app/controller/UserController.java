@@ -3,6 +3,7 @@ package com.shashank.social_media_app.controller;
 import com.shashank.social_media_app.entity.Post;
 import com.shashank.social_media_app.entity.User;
 import com.shashank.social_media_app.exception.UserNotFoundException;
+import com.shashank.social_media_app.service.PostService;
 import com.shashank.social_media_app.service.UserDaoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,11 @@ public class UserController {
 
 
     private UserDaoService userDaoService;
+    private PostService postService;
 
-    public UserController(UserDaoService userDaoService) {
+    public UserController(UserDaoService userDaoService,PostService postService) {
         this.userDaoService=userDaoService;
+        this.postService=postService;
     }
 
     @GetMapping
@@ -57,5 +60,17 @@ public class UserController {
         if(optionalUser.isEmpty()) throw new UserNotFoundException("User Not Found with ID:"+id);
 
         return optionalUser.get().getPosts();
+    }
+
+    @PostMapping("id/{id}/add-post")
+    public ResponseEntity<Post> addPostForUser(@PathVariable int id,@Valid @RequestBody Post post) {
+        Optional<User> optionalUser=userDaoService.findOne(id);
+        if(optionalUser.isEmpty()) throw new UserNotFoundException("User Not Found with ID:"+id);
+
+        post.setUser(optionalUser.get());
+        Post savedPost=postService.savePost(post);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().cloneBuilder().
+                path("/{id}").buildAndExpand(savedPost.getId()).toUri();
+        return ResponseEntity.created(location).build();
     }
 }
