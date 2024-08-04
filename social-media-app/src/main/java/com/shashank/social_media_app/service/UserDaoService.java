@@ -1,41 +1,35 @@
 package com.shashank.social_media_app.service;
 
 import com.shashank.social_media_app.entity.User;
+import com.shashank.social_media_app.repository.UserRepository;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
+import java.util.Optional;
+
 
 @Component
 public class UserDaoService {
-    private static List<User> users = new ArrayList<>();
-    private static int userCount=0;
 
-    static {
-        users.add(new User(++userCount,"Adam", LocalDate.now().minusYears(30)));
-        users.add(new User(++userCount,"Eve",LocalDate.now().minusYears(25)));
-        users.add(new User(++userCount,"Jim",LocalDate.now().minusYears(20)));
+    private UserRepository userRepository;
+
+    public UserDaoService(UserRepository userRepository) {
+        this.userRepository=userRepository;
     }
 
     public List<User> findAll() {
-        return users;
+        return userRepository.findAll();
     }
 
-    public User findOne(int id) {
-        Predicate<? super User> predicate = user -> user.getId()==id;
-        return users.stream().filter(predicate).findFirst().orElse(null);
+    public Optional<User> findOne(int id) {
+        return userRepository.findById(id);
     }
 
     public void deleteUser(int id) {
-        Predicate<? super User> predicate = user -> user.getId()==id;
-        users.removeIf(predicate);
+        userRepository.deleteById(id);
     }
 
     public User save(User user) {
-        user.setId(++userCount);
-        users.add(user);
-        return user;
+        return userRepository.save(user);
     }
 }

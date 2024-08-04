@@ -11,6 +11,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("users")
@@ -30,10 +31,10 @@ public class UserController {
 
     @GetMapping(path="/id/{id}")
     public User getUserById(@PathVariable int id) {
-        User user=userDaoService.findOne(id);
-        if(user==null) throw new UserNotFoundException("User Not Found with ID:"+id);
+        Optional<User> optionalUser=userDaoService.findOne(id);
+        if(optionalUser.isEmpty()) throw new UserNotFoundException("User Not Found with ID:"+id);
 
-        return user;
+        return optionalUser.get();
     }
 
     @PostMapping
